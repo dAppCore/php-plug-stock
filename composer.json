@@ -1,11 +1,11 @@
 {
-    "name": "lthn/php-plug-stock",
+    "name": "dappcore/php-plug-stock",
     "description": "Stock imagery integrations for the Plug framework",
     "type": "library",
     "license": "EUPL-1.2",
     "require": {
         "php": "^8.2",
-        "lthn/php": "*"
+        "dappcore/php": "*"
     },
     "autoload": {
         "psr-4": {
