@@ -32,11 +32,12 @@ class TriggerDownload implements ShouldQueue
 
     public function __construct(
         public readonly string $downloadLocation
-    ) {}
+    ) {
+    }
 
     public function handle(): void
     {
-        (new Download)->trigger($this->downloadLocation);
+        (new Download())->trigger($this->downloadLocation);
     }
 
     public function tags(): array

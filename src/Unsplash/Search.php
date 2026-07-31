@@ -21,9 +21,9 @@ class Search
     use BuildsResponse;
     use UsesHttp;
 
-    protected string $endpointUrl = 'https://api.unsplash.com';
+    protected const ENDPOINT_URL = 'https://api.unsplash.com';
 
-    protected string $clientId;
+    protected readonly string $clientId;
 
     /**
      * Default search terms for random photos when no query is provided.
@@ -63,7 +63,7 @@ class Search
             ? $query
             : Arr::random($this->defaultSearchTerms);
 
-        $response = $this->http()->get("{$this->endpointUrl}/search/photos", [
+        $response = $this->http()->get(self::ENDPOINT_URL.'/search/photos', [
             'client_id' => $this->clientId,
             'query' => $searchQuery,
             'page' => $page,
@@ -74,7 +74,7 @@ class Search
             $results = $data['results'] ?? [];
 
             return [
-                'photos' => array_map([Photo::class, 'transform'], $results),
+                'photos' => array_map(Photo::transform(...), $results),
                 'total' => $data['total'] ?? 0,
                 'total_pages' => $data['total_pages'] ?? 0,
             ];

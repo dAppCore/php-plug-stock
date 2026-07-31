@@ -22,9 +22,9 @@ class Download
     use BuildsResponse;
     use UsesHttp;
 
-    protected string $endpointUrl = 'https://api.unsplash.com';
+    protected const ENDPOINT_URL = 'https://api.unsplash.com';
 
-    protected string $clientId;
+    protected readonly string $clientId;
 
     public function __construct()
     {
@@ -53,7 +53,7 @@ class Download
             return $this->error('Invalid download URL');
         }
 
-        $url = "{$this->endpointUrl}{$downloadPath}";
+        $url = self::ENDPOINT_URL.$downloadPath;
         if ($downloadQuery) {
             $url .= "?{$downloadQuery}";
         }

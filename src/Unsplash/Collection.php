@@ -20,9 +20,9 @@ class Collection
     use BuildsResponse;
     use UsesHttp;
 
-    protected string $endpointUrl = 'https://api.unsplash.com';
+    protected const ENDPOINT_URL = 'https://api.unsplash.com';
 
-    protected string $clientId;
+    protected readonly string $clientId;
 
     public function __construct()
     {
@@ -38,7 +38,7 @@ class Collection
      */
     public function list(int $page = 1, int $perPage = 30): Response
     {
-        $response = $this->http()->get("{$this->endpointUrl}/collections", [
+        $response = $this->http()->get(self::ENDPOINT_URL.'/collections', [
             'client_id' => $this->clientId,
             'page' => $page,
             'per_page' => min($perPage, 30),
@@ -60,14 +60,14 @@ class Collection
      */
     public function photos(string $collectionId, int $page = 1, int $perPage = 30): Response
     {
-        $response = $this->http()->get("{$this->endpointUrl}/collections/{$collectionId}/photos", [
+        $response = $this->http()->get(self::ENDPOINT_URL."/collections/{$collectionId}/photos", [
             'client_id' => $this->clientId,
             'page' => $page,
             'per_page' => min($perPage, 30),
         ]);
 
         return $this->fromHttp($response, fn (array $data) => [
-            'photos' => array_map([Photo::class, 'transform'], $data),
+            'photos' => array_map(Photo::transform(...), $data),
         ]);
     }
 }

@@ -20,9 +20,9 @@ class Photo
     use BuildsResponse;
     use UsesHttp;
 
-    protected string $endpointUrl = 'https://api.unsplash.com';
+    protected const ENDPOINT_URL = 'https://api.unsplash.com';
 
-    protected string $clientId;
+    protected readonly string $clientId;
 
     public function __construct()
     {
@@ -38,7 +38,7 @@ class Photo
      */
     public function get(string $photoId): Response
     {
-        $response = $this->http()->get("{$this->endpointUrl}/photos/{$photoId}", [
+        $response = $this->http()->get(self::ENDPOINT_URL."/photos/{$photoId}", [
             'client_id' => $this->clientId,
         ]);
 
